@@ -3,11 +3,6 @@
 registry = "test"
 
 [[package]]
-name = "centau/vide"
-version = "0.2.0"
-dependencies = []
-
-[[package]]
 name = "evaera/cmdr"
 version = "1.12.0"
 dependencies = []
@@ -25,7 +20,12 @@ dependencies = [["Promise", "evaera/promise@4.0.0"]]
 [[package]]
 name = "pc/heliosredux"
 version = "0.1.0"
-dependencies = [["classpp", "tenebrisnoctua/classpp@1.2.0"], ["cmdr", "evaera/cmdr@1.12.0"], ["janitor", "howmanysmall/janitor@1.17.0"], ["knit", "sleitnick/knit@1.7.0"], ["promise", "evaera/promise@4.0.0"], ["vide", "centau/vide@0.2.0"]]
+dependencies = [["classpp", "tenebrisnoctua/classpp@1.2.0"], ["cmdr", "evaera/cmdr@1.12.0"], ["janitor", "howmanysmall/janitor@1.17.0"], ["knit", "sleitnick/knit@1.7.0"], ["promise", "evaera/promise@4.0.0"], ["roact", "roblox/roact@1.4.4"]]
+
+[[package]]
+name = "roblox/roact"
+version = "1.4.4"
+dependencies = []
 
 [[package]]
 name = "sleitnick/comm"

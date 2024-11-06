@@ -1,25 +1,43 @@
-local vide = require("@packages/vide")
+local roact = require("@packages/roact")
 
-local create = vide.create
+local debounce = false
 
-local function Button(props: {
-	Position: UDim2,
-	Text: string,
-	Parent: Instance?,
-	Activated: () -> (),
+return roact.createElement("TextButton", {
+	AnchorPoint = Vector2.new(0.5, 0.5),
+	Position = UDim2.fromScale(0.5, 0.5),
+	Size = UDim2.fromScale(0.4, 0.1),
+	Text = "click this button and be happy",
+	BackgroundColor3 = Color3.fromRGB(0, 0, 0),
+	BackgroundTransparency = 0.5,
+
+	[roact.Event.MouseButton1Click] = function(element)
+		if not debounce then
+			debounce = true
+			local tween = game.TweenService:Create(
+				element.UIScale,
+				TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, 0, true),
+				{ Scale = 0.9 }
+			)
+
+			tween:Play()
+			tween.Completed:Wait()
+			debounce = false
+		end
+	end,
+}, {
+	UIScale = roact.createElement("UIScale"),
+	UICorner = roact.createElement("UICorner"),
+	UIStroke = roact.createElement("UIStroke", {
+		ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
+		Color = Color3.fromRGB(255, 255, 255),
+	}, {
+		UIGradient = roact.createElement("UIGradient", {
+			Transparency = NumberSequence.new({
+				NumberSequenceKeypoint.new(0, 0.3),
+				NumberSequenceKeypoint.new(0.7, 1),
+				NumberSequenceKeypoint.new(1, 1),
+			}),
+			Rotation = -90,
+		}),
+	}),
 })
-	return create("TextButton")({
-		BackgroundColor3 = Color3.fromRGB(50, 50, 50),
-		TextColor3 = Color3.fromRGB(255, 255, 255),
-		Size = UDim2.fromOffset(200, 150),
-
-		Position = props.Position,
-		Text = props.Text,
-		Parent = props.Parent,
-		Activated = props.Activated,
-
-		create("UICorner")({}),
-	})
-end
-
-return Button

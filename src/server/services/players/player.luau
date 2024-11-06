@@ -3,9 +3,9 @@ local class = classpp.class
 
 local player = class("Player")({
 	constructor = function(self, name, character, humanoid)
-		self.Name = name
-		self.Character = character
-		self.Humanoid = humanoid
+		self.Name = name :: string
+		self.Character = character :: Model ~= nil and character
+		self.Humanoid = humanoid :: Humanoid ~= nil and humanoid
 	end,
 	Public = {
 		Name = "",
