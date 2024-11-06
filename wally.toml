@@ -7,3 +7,6 @@ realm = "shared"
 [dependencies]
 vide = "centau/vide@0.2.0"
 cmdr = "evaera/cmdr@1.12.0"
+promise = "evaera/promise@4.0.0"
+janitor = "howmanysmall/janitor@1.17.0"
+knit = "sleitnick/knit@1.7.0"
