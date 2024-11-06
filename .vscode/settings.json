@@ -1,0 +1,25 @@
+{
+    "luau-lsp.ignoreGlobs": [
+        ".lune/**",
+        "dist/**",
+        "[Pp]ackages/**"
+    ],
+    "[lua]": {
+        "editor.defaultFormatter": "JohnnyMorganz.stylua",
+        "editor.formatOnSave": true
+    },
+    "luau-lsp.require.mode": "relativeToFile",
+    "luau-lsp.require.directoryAliases": {
+        "@client": "src/client",
+        "@controllers": "src/client/controllers",
+        "@server": "src/server",
+        "@services": "src/server/services",
+        "@common": "src/common",
+        "@ui": "src/client/ui",
+        "@components": "src/client/ui/components",
+        "@packages": "Packages"
+    },
+    "luau-lsp.types.definitionFiles": [
+        ".vscode/type_definitions.d.luau"
+    ]
+}

@@ -1,0 +1,24 @@
+{
+    "name": "Helios-Redux",
+    "emitLegacyScripts": false,
+    "tree": {
+        "$className": "DataModel",
+        "ReplicatedStorage": {
+            "client": {
+                "$path": "dist/client"
+            },
+            "common": {
+                "$path": "dist/common"
+            },
+            "Packages": {
+                "$className": "Folder",
+                "$path": "Packages"
+            }
+        },
+        "ServerScriptService": {
+            "server": {
+                "$path": "dist/server"
+            }
+        }
+    }
+}
