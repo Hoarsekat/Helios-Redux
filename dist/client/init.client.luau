@@ -3,15 +3,21 @@ local promise = require(script.Parent:WaitForChild('Packages'):WaitForChild('pro
 
 local runtime = os.clock()
 
-for _, v in ipairs(script.controllers:GetDescendants()) do
-	if v:IsA("ModuleScript") and v.Name:find("controller$") then
-		require(v)
-	end
-end
+promise
+	.new(function(resolve)
+		for _, v in ipairs(script.controllers:GetDescendants()) do
+			if v:IsA("ModuleScript") and v.Name:find("controller$") then
+				require(v)
+			end
+		end
+
+		resolve()
+	end)
+	:catch(warn)
 
 promise
 	.try(knit.Start)
 	:andThen(function()
-		print(string.format("[Client] Took %4.f seconds to initialize controllers.", os.clock() - runtime))
+		print(string.format("[Client] Took %.4f seconds to initialize controllers.", os.clock() - runtime))
 	end)
 	:catch(warn)

@@ -3,11 +3,17 @@ local promise = require(game:GetService('ReplicatedStorage'):WaitForChild('Packa
 
 local runtime = os.clock()
 
-for _, v in ipairs(script.services:GetDescendants()) do
-	if v:IsA("ModuleScript") and v.Name:find("service$") then
-		require(v)
-	end
-end
+promise
+	.new(function(resolve)
+		for _, v in ipairs(script.services:GetDescendants()) do
+			if v:IsA("ModuleScript") and v.Name:find("service$") then
+				require(v)
+			end
+		end
+
+		resolve()
+	end)
+	:catch(warn)
 
 promise
 	.try(knit.Start)
