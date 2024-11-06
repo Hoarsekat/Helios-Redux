@@ -1,16 +1,19 @@
+-- #selene: allow(global_usage)
 -- A collection of utility functions for manipulating the terminal
 local terminal = {}
 
 local isVerbose = false
 
+local lineMax
+
 local lineStateData = (_G._terminalLineStateData or {
-    currentLine = 0,
-    lineMax = 0,
-    lineLengthData = {},
+	currentLine = 0,
+	lineMax = 0,
+	lineLengthData = {},
 }) :: {
-    currentLine: number,
-    lineMax: number,
-    lineLengthData: { number },
+	currentLine: number,
+	lineMax: number,
+	lineLengthData: { number },
 }
 
 local stdio = require("@lune/stdio")
