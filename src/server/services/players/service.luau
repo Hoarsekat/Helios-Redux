@@ -3,6 +3,8 @@ local janitor = require("@packages/janitor")
 
 local player = require("./player")
 
+local PermissionService
+
 local players = game:GetService("Players")
 
 local service = knit.CreateService({
@@ -19,6 +21,8 @@ function service:GetPlayer(plr)
 end
 
 function service:KnitStart()
+	PermissionService = knit.GetService("PermissionService")
+
 	local playerAddedConnection = players.PlayerAdded:Connect(function(plr)
 		local character = plr.Character or plr.CharacterAdded:Wait()
 		local humanoid = character:WaitForChild("Humanoid")
@@ -27,6 +31,10 @@ function service:KnitStart()
 
 		self._Players[plr] = playerClass
 		self._Players[plr]:setupCharacter()
+
+		if PermissionService:HasPermission(plr, "All") then
+			print(plr.Name, [[has permission type "All"]])
+		end
 	end)
 
 	self._janitor = janitor.new()
