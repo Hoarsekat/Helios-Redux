@@ -1,3 +1,4 @@
+-- #selene: allow(unused_variable)
 local process = require("@lune/process")
 local fs = require("@lune/fs")
 local task = require("@lune/task")
@@ -35,7 +36,7 @@ local function processFiles()
 		local status = executeCommand("darklua", { "process", "src", "temp", "-c", ".darklua.dev.json" })
 
 		if status.code == 0 then
-            -- Optional processing steps here
+			-- Optional processing steps here
 			recursiveCopy("temp", "dist")
 		else
 			logger:error("Did not update files due to Darklua error, check console for more information.")
