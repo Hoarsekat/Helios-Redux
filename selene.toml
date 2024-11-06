@@ -1,2 +1,5 @@
 std = "selene_defs"
 exclude = ["Packages/**", "packages/**", "scripts/**"]
+
+[lints]
+mixed_table = "allow"
