@@ -7,7 +7,7 @@ local janitor = require("@packages/janitor")
 local promptTemplate = script.Parent:WaitForChild("prompt")
 
 local controller = knit.CreateController({
-	Name = "PromptController",
+	Name = "PromPtController",
 })
 
 function createPrompt(prompt)
