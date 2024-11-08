@@ -178,7 +178,7 @@ function door:canPlayerAccess(player)
 	return hasBasePermissions and hasLockdownPermissions
 end
 
-function door:playerInteracted(player)
+function door:playerInteracted(player, reader)
 	local character = player.Character
 	local humanoid = character:FindFirstChild("Humanoid")
 	local backpack = player.Backpack
@@ -193,8 +193,12 @@ function door:playerInteracted(player)
 		return false
 	end
 
+	local readerSounds = self.ReaderSounds[reader]
+
 	if self:canPlayerAccess(player) then
+		readerSounds.GrantedSound:Play()
 		self:flashLEDs("LEDG")
+		task.wait(0.25)
 		self:toggle()
 		if character:FindFirstChild("Keycard") then -- if player has keycard equipped still, unequip it/change it back to previous tool
 			if currentlyEquippedTool then
@@ -204,6 +208,7 @@ function door:playerInteracted(player)
 			end
 		end
 	else
+		readerSounds.DeniedSound:Play()
 		self:flashLEDs("LEDR")
 		return false
 	end
@@ -249,12 +254,14 @@ function door:setupReaders()
 			requiresKeycard = true, -- true
 		},
 	}
+
 	self.LEDs = { -- LEDG = LED Green, etc | LEDGLOBAL = all types of lights
 		LEDG = {},
 		LEDR = {},
 		LEDGLOBAL = {},
 	}
 	self.ProximityPrompts = {}
+	self.ReaderSounds = {}
 
 	for _, descendant in ipairs(self.Object:GetDescendants()) do
 		if descendant:IsA("BasePart") then
@@ -266,6 +273,22 @@ function door:setupReaders()
 
 			for readerName, data in pairs(readerNames) do
 				if readerName == descendant.Name then
+					local readerSounds = {}
+
+					local grantedSound = Instance.new("Sound")
+					grantedSound.Name = "AccessGranted"
+					grantedSound.SoundId = "rbxassetid://200888468"
+					grantedSound.Parent = descendant
+					readerSounds.GrantedSound = grantedSound
+
+					local deniedSound = Instance.new("Sound")
+					deniedSound.Name = "AccessDenied"
+					deniedSound.SoundId = "rbxassetid://200888510"
+					deniedSound.Parent = descendant
+					readerSounds.DeniedSound = deniedSound
+
+					self.ReaderSounds[descendant] = readerSounds
+
 					local prompt = Instance.new("ProximityPrompt")
 					prompt.ObjectText = self.CustomName or "Door"
 					prompt.ActionText = (self.IsOpen and "Close" or "Open")
@@ -284,7 +307,7 @@ function door:setupReaders()
 						if self.OnlyOpen and self.IsOpen then
 							return
 						end
-						self:playerInteracted(player)
+						self:playerInteracted(player, descendant)
 					end)
 
 					self.Janitor:Add(triggeredConnection)
