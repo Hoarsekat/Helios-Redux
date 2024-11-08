@@ -228,7 +228,7 @@ end
 function door:setupReaders()
 	local readerNames = {
 		["Reader"] = {
-			holdDuration = 0,
+			holdDuration = 1, -- default 0, 1 for testing prompts
 			requiresKeycard = false, -- true
 		},
 	}
@@ -254,8 +254,8 @@ function door:setupReaders()
 					prompt.ActionText = (self.IsOpen and "Close" or "Open")
 					prompt.KeyboardKeyCode = Enum.KeyCode.E
 					prompt.RequiresLineOfSight = true
-					prompt.MaxActivationDistance = self.ReaderMaxActivationDistance or 6
-					prompt.Style = Enum.ProximityPromptStyle.Default -- Custom, default for debugging
+					prompt.MaxActivationDistance = self.ReaderMaxActivationDistance or 10
+					prompt.Style = Enum.ProximityPromptStyle.Custom -- Custom, default for debugging
 					prompt.HoldDuration = data.holdDuration or 0
 					prompt.Parent = descendant
 					prompt.Enabled = true -- false by default due to keycard handling
