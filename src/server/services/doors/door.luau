@@ -228,7 +228,7 @@ end
 function door:setupReaders()
 	local readerNames = {
 		["Reader"] = {
-			holdDuration = 1, -- default 0, 1 for testing prompts
+			holdDuration = 0, -- default 0, 1 for testing prompts
 			requiresKeycard = false, -- true
 		},
 	}
