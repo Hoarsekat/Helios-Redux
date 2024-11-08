@@ -12,7 +12,7 @@ local controller = knit.CreateController({
 
 function createPrompt(prompt)
 	local promptUi = promptTemplate:Clone()
-	local expand = promptUi:WaitForChild("Expand")
+	-- local expand = promptUi:WaitForChild("Expand")
 	local interactionFrame = promptUi:WaitForChild("Interaction")
 	local interactionContainer = interactionFrame:WaitForChild("Container")
 	local descriptions = interactionContainer:WaitForChild("Descriptions")
@@ -36,11 +36,12 @@ function createPrompt(prompt)
 		{ Scale = 1 }
 	)
 
+	--[[
 	local forceTween = tweenService:Create(
 		progress.UIScale,
 		TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, 0, true),
 		{ Scale = 1 }
-	)
+	)]]
 
 	local connections = {}
 
@@ -57,7 +58,7 @@ function createPrompt(prompt)
 		end
 	end)
 
-	connections[#connections + 1] = prompt.Triggered:Connect(function()
+	--[[connections[#connections + 1] = prompt.Triggered:Connect(function()
 		if prompt.HoldDuration == 0 then
 			forceTween:Play()
 		end
@@ -74,7 +75,7 @@ function createPrompt(prompt)
 				expandC:Destroy()
 			end)
 		end)
-	end)
+	end)]]
 
 	connections[#connections + 1] = prompt:GetPropertyChangedSignal("ActionText"):Connect(function()
 		typeK.Text = prompt.ActionText
