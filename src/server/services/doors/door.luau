@@ -179,6 +179,16 @@ function door:canPlayerAccess(player)
 end
 
 function door:playerInteracted(player)
+	local character = player.Character
+	local humanoid = character:FindFirstChild("Humanoid")
+	local backpack = player.Backpack
+
+	local currentlyEquippedTool = character:FindFirstChildOfClass("Tool")
+
+	if backpack:FindFirstChild("Keycard") then
+		humanoid:EquipTool(backpack.Keycard)
+	end
+
 	if self.Cooldown then
 		return false
 	end
@@ -186,6 +196,13 @@ function door:playerInteracted(player)
 	if self:canPlayerAccess(player) then
 		self:flashLEDs("LEDG")
 		self:toggle()
+		if character:FindFirstChild("Keycard") then -- if player has keycard equipped still, unequip it/change it back to previous tool
+			if currentlyEquippedTool then
+				humanoid:EquipTool(currentlyEquippedTool)
+			else
+				humanoid:UnequipTools()
+			end
+		end
 	else
 		self:flashLEDs("LEDR")
 		return false
@@ -229,7 +246,7 @@ function door:setupReaders()
 	local readerNames = {
 		["Reader"] = {
 			holdDuration = 0, -- default 0, 1 for testing prompts
-			requiresKeycard = false, -- true
+			requiresKeycard = true, -- true
 		},
 	}
 	self.LEDs = { -- LEDG = LED Green, etc | LEDGLOBAL = all types of lights
