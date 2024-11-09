@@ -10,7 +10,7 @@ local service = knit.CreateService({
 	_Functions = {},
 })
 
-local VERBOSE_LOGS = true -- Use specifically for debugging, lots of clutter!
+local VERBOSE_LOGS = false -- Use specifically for debugging, lots of clutter!
 
 function service:HasPermission(player, data)
 	if not self.hasInitialised then

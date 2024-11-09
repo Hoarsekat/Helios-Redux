@@ -36,9 +36,6 @@ function service:SetupPlayer(plr: Player)
 	local player = self:GetPlayer(plr)
 
 	player:setupCharacter()
-	if player:hasPermission("All") then -- Test
-		print(plr.Name, [[has permission type "All"]])
-	end
 end
 
 function service:KnitStart()
