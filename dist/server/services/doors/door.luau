@@ -185,21 +185,7 @@ function door:playerInteracted(player, reader)
 
 	local currentlyEquippedTool = character:FindFirstChildOfClass("Tool")
 
-	if backpack:FindFirstChild("Keycard") then
-		humanoid:EquipTool(backpack.Keycard)
-	end
-
-	if self.Cooldown then
-		return false
-	end
-
-	local readerSounds = self.ReaderSounds[reader]
-
-	if self:canPlayerAccess(player) then
-		readerSounds.GrantedSound:Play()
-		self:flashLEDs("LEDG")
-		task.wait(0.25)
-		self:toggle()
+	local function equipToolsCheck()
 		if character:FindFirstChild("Keycard") then -- if player has keycard equipped still, unequip it/change it back to previous tool
 			if currentlyEquippedTool then
 				humanoid:EquipTool(currentlyEquippedTool)
@@ -207,9 +193,29 @@ function door:playerInteracted(player, reader)
 				humanoid:UnequipTools()
 			end
 		end
+	end
+
+	if self.Cooldown then
+		return false
+	end
+
+	if backpack:FindFirstChild("Keycard") then
+		humanoid:EquipTool(backpack.Keycard)
+	end
+
+	local readerSounds = self.ReaderSounds[reader]
+
+	if self:canPlayerAccess(player) then
+		readerSounds.GrantedSound:Play()
+		self:flashLEDs("LEDG")
+		task.delay(0.5, equipToolsCheck)
+		task.wait(0.25)
+		self:toggle()
 	else
 		readerSounds.DeniedSound:Play()
 		self:flashLEDs("LEDR")
+		task.delay(0.5, equipToolsCheck)
+
 		return false
 	end
 end
@@ -277,13 +283,13 @@ function door:setupReaders()
 
 					local grantedSound = Instance.new("Sound")
 					grantedSound.Name = "AccessGranted"
-					grantedSound.SoundId = "rbxassetid://200888468"
+					grantedSound.SoundId = "rbxassetid://1464193038"
 					grantedSound.Parent = descendant
 					readerSounds.GrantedSound = grantedSound
 
 					local deniedSound = Instance.new("Sound")
 					deniedSound.Name = "AccessDenied"
-					deniedSound.SoundId = "rbxassetid://200888510"
+					deniedSound.SoundId = "rbxassetid://1464205581"
 					deniedSound.Parent = descendant
 					readerSounds.DeniedSound = deniedSound
 
