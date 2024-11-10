@@ -1,8 +1,11 @@
 local proximityPromptService = game:GetService("ProximityPromptService")
 local tweenService = game:GetService("TweenService")
+local players = game:GetService("Players")
 
 local knit = require("@packages/knit")
 local janitor = require("@packages/janitor")
+
+local player = players.LocalPlayer
 
 local promptTemplate = script.Parent:WaitForChild("prompt")
 
@@ -49,12 +52,32 @@ function createPrompt(prompt)
 		if prompt.HoldDuration > 0 then
 			holdingTween:Play()
 		end
+
+		if prompt.Parent:HasTag("Reader") then
+			local targetPosition = (prompt.Parent.CFrame * CFrame.new(2.25, -0.6, 1.5)).p
+			local humanoid = player.Character.Humanoid
+
+			humanoid:MoveTo(targetPosition, prompt.Parent)
+		end
 	end)
 
 	connections[#connections + 1] = prompt.PromptButtonHoldEnded:Connect(function()
 		if prompt.HoldDuration > 0 then
 			holdingTween:Cancel()
 			progress.UIScale.Scale = 0
+		end
+
+		if prompt.Parent:HasTag("Reader") then
+			player.Character:MoveTo(player.Character.PrimaryPart.CFrame.p)
+		end
+	end)
+
+	connections[#connections + 1] = prompt.Triggered:Connect(function()
+		if prompt.Parent:HasTag("Reader") then
+			local targetPosition = (prompt.Parent.CFrame * CFrame.new(2.25, -0.6, 1.5)).p
+
+			player.Character.HumanoidRootPart.CFrame =
+				CFrame.new(targetPosition, (prompt.Parent.CFrame * CFrame.new(0, 0, 1.5)).p)
 		end
 	end)
 

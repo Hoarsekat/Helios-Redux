@@ -185,6 +185,10 @@ function door:playerInteracted(player, reader)
 
 	local currentlyEquippedTool = character:FindFirstChildOfClass("Tool")
 
+	if self.OnlyOpen and self.IsOpen then
+		return false
+	end
+
 	local function equipToolsCheck()
 		if character:FindFirstChild("Keycard") then -- if player has keycard equipped still, unequip it/change it back to previous tool
 			if currentlyEquippedTool then
@@ -256,7 +260,7 @@ end
 function door:setupReaders()
 	local readerNames = {
 		["Reader"] = {
-			holdDuration = 0, -- default 0, 1 for testing prompts
+			holdDuration = 0.5, -- default 0, 1 for testing prompts
 			requiresKeycard = true, -- true
 		},
 	}
@@ -308,11 +312,9 @@ function door:setupReaders()
 
 					table.insert(self.ProximityPrompts, prompt)
 
+					game.CollectionService:AddTag(descendant, "Reader")
+
 					local triggeredConnection = prompt.Triggered:Connect(function(player)
-						-- TODO: Add support for hacking
-						if self.OnlyOpen and self.IsOpen then
-							return
-						end
 						self:playerInteracted(player, descendant)
 					end)
 
