@@ -7,20 +7,20 @@ function weld(o1, o2)
 		w.C0 = o1.CFrame:Inverse() * CFrame.new(o1.CFrame.p)
 		w.C1 = o2.CFrame:Inverse() * CFrame.new(o1.CFrame.p)
 		w.Part0 = o1
-
 		w.Part1 = o2
-
 		o2.Anchored = false
 	end
 end
 
 return {
 	name = "FireDoorUp",
+
 	actuate = function(self, shouldOpen)
 		local timeToComplete
 		local soundName = shouldOpen and "OpenSound" or "CloseSound"
 
 		if not shouldOpen then
+			-- Activate alarms
 			if self.Object.Alarms then
 				for _, alarm in ipairs(self.Object.Alarms:GetChildren()) do
 					if alarm:IsA("Model") and alarm:FindFirstChild("Bulb") then
@@ -47,12 +47,12 @@ return {
 			task.wait(2)
 
 			if self[soundName] and self[soundName]:IsA("Sound") then
+				self[soundName].PlaybackSpeed = self.SoundMultiplier
 				self[soundName]:Play()
 			end
 
 			for _, object in ipairs(self.Object.Doors:GetChildren()) do
-				timeToComplete = self.Object.Doors.Door.Main:WaitForChild("Close").TimeLength * 2
-
+				timeToComplete = (self.Object.Doors.Door.Main:WaitForChild("Close").TimeLength * self.SpeedMultiplier)
 				tweenService
 					:Create(object.Main, TweenInfo.new(timeToComplete), { CFrame = object.Main.OrigPos.Value })
 					:Play()
@@ -90,12 +90,12 @@ return {
 			end
 
 			if self[soundName] and self[soundName]:IsA("Sound") then
+				self[soundName].PlaybackSpeed = self.SoundMultiplier
 				self[soundName]:Play()
 			end
 
 			for _, object in ipairs(self.Object.Doors:GetChildren()) do
-				timeToComplete = self.Object.Doors.Door.Main:WaitForChild("Open").TimeLength * 2
-
+				timeToComplete = (self.Object.Doors.Door.Main:WaitForChild("Open").TimeLength * self.SpeedMultiplier)
 				tweenService
 					:Create(
 						object.Main,
@@ -110,10 +110,10 @@ return {
 			return true
 		end
 	end,
+
 	setup = function(self)
 		if
-			self.OpenSound
-			and tonumber(self.OpenSound)
+			tonumber(self.OpenSound)
 			and self.Object.Doors
 			and self.Object.Doors.Door
 			and self.Object.Doors.Door.Main
@@ -121,15 +121,12 @@ return {
 			local openSound = Instance.new("Sound")
 			openSound.SoundId = "rbxassetid://" .. tostring(self.OpenSound)
 			openSound.Name = "Open"
-			openSound.PlaybackSpeed = 0.5
 			openSound.Parent = self.Object.Doors.Door.Main
-
 			self.OpenSound = openSound
 		end
 
 		if
-			self.CloseSound
-			and tonumber(self.CloseSound)
+			tonumber(self.CloseSound)
 			and self.Object.Doors
 			and self.Object.Doors.Door
 			and self.Object.Doors.Door.Main
@@ -137,9 +134,7 @@ return {
 			local closeSound = Instance.new("Sound")
 			closeSound.SoundId = "rbxassetid://" .. tostring(self.CloseSound)
 			closeSound.Name = "Close"
-			closeSound.PlaybackSpeed = 0.5
 			closeSound.Parent = self.Object.Doors.Door.Main
-
 			self.CloseSound = closeSound
 		end
 
