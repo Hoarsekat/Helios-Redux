@@ -1,9 +1,9 @@
-local knit = require(game:GetService('ReplicatedStorage'):WaitForChild('Packages'):WaitForChild('knit'))
+local indium = require(game:GetService('ReplicatedStorage'):WaitForChild('Packages'):WaitForChild('indium'))
 local tags = require(game:GetService('ReplicatedStorage'):WaitForChild('common'):WaitForChild('tags'):WaitForChild('tags'))
 
 local doorClass = require(script.Parent:WaitForChild('door'))
 
-local service = knit.CreateService({
+local service = indium.CreateService({
 	Name = "DoorsService",
 	Client = {},
 })
@@ -12,14 +12,14 @@ function service:GetDoor(object)
 	if self.doors[object] then
 		return self.doors[object]
 	else
-		local newDoor = doorClass.new(object, { PlayerService = knit.GetService("PlayerService") })
+		local newDoor = doorClass.new(object, { PlayerService = indium.GetService("PlayerService") })
 		self.doors[object] = newDoor
 
 		return newDoor
 	end
 end
 
-function service:KnitStart()
+function service:IndiumStart()
 	self.doors = {}
 	tags.bindToTag("Door", function(object)
 		local success, result = pcall(self.GetDoor, self, object)

@@ -1,11 +1,11 @@
-local knit = require("@packages/knit")
+local indium = require("@packages/indium")
 local janitor = require("@packages/janitor")
 
 local playerClass = require("./player")
 
 local players = game:GetService("Players")
 
-local service = knit.CreateService({
+local service = indium.CreateService({
 	Name = "PlayerService",
 	Client = {},
 
@@ -20,7 +20,7 @@ function service:GetPlayer(plr)
 		local humanoid = character:WaitForChild("Humanoid")
 
 		local player =
-			playerClass.new(plr, character, humanoid, { PermissionService = knit.GetService("PermissionService") })
+			playerClass.new(plr, character, humanoid, { PermissionService = indium.GetService("PermissionService") })
 
 		self._Players[plr] = player
 
@@ -38,7 +38,7 @@ function service:SetupPlayer(plr: Player)
 	player:setupCharacter()
 end
 
-function service:KnitStart()
+function service:IndiumStart()
 	local playerAddedConnection = players.PlayerAdded:Connect(function(plr)
 		self:SetupPlayer(plr)
 	end)

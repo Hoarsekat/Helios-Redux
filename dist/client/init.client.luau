@@ -1,4 +1,4 @@
-local knit = require(script.Parent:WaitForChild('Packages'):WaitForChild('knit'))
+local indium = require(script.Parent:WaitForChild('Packages'):WaitForChild('indium'))
 local promise = require(script.Parent:WaitForChild('Packages'):WaitForChild('promise'))
 
 local runtime = os.clock()
@@ -10,7 +10,7 @@ for _, v in ipairs(script.controllers:GetDescendants()) do
 end
 
 promise
-	.try(knit.Start)
+	.try(indium.Start)
 	:andThen(function()
 		print(string.format("[Client] Took %.4f seconds to initialize controllers.", os.clock() - runtime))
 	end)

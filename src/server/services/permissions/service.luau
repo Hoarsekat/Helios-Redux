@@ -1,9 +1,9 @@
-local knit = require("@packages/knit")
+local indium = require("@packages/indium")
 local permissions = script.Parent:WaitForChild("permissions")
 
 local players = game:GetService("Players")
 
-local service = knit.CreateService({
+local service = indium.CreateService({
 	Name = "PermissionService",
 	Client = {},
 
@@ -134,7 +134,7 @@ function service:RegisterFunctionsIn(folder: Folder)
 	print("Registered permissions functions in", folder)
 end
 
-function service:KnitStart()
+function service:IndiumStart()
 	self.initialising = true
 	self:RegisterFunctionsIn(permissions)
 	self.hasInitialised = true

@@ -1,4 +1,4 @@
-local knit = require("@packages/knit")
+local indium = require("@packages/indium")
 local janitor = require("@packages/janitor")
 local promise = require("@packages/promise")
 
@@ -9,7 +9,7 @@ local playerService
 
 local players = game:GetService("Players")
 
-local service = knit.CreateService({
+local service = indium.CreateService({
 	Name = "LoadoutService",
 	Client = {},
 })
@@ -143,8 +143,8 @@ function service:RestoreClothing(player)
 	end)
 end
 
-function service:KnitStart()
-	playerService = knit.GetService("PlayerService")
+function service:IndiumStart()
+	playerService = indium.GetService("PlayerService")
 
 	local playerAddedConnection = players.PlayerAdded:Connect(function(plr)
 		local player = playerService:GetPlayer(plr)

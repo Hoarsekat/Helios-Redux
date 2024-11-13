@@ -13,6 +13,11 @@ version = "4.0.0"
 dependencies = []
 
 [[package]]
+name = "hoarsekat/indium"
+version = "0.1.0"
+dependencies = [["Comm", "sleitnick/comm@1.0.1"], ["Promise", "evaera/promise@4.0.0"]]
+
+[[package]]
 name = "howmanysmall/janitor"
 version = "1.17.0"
 dependencies = [["Promise", "evaera/promise@4.0.0"]]
@@ -20,7 +25,7 @@ dependencies = [["Promise", "evaera/promise@4.0.0"]]
 [[package]]
 name = "pc/heliosredux"
 version = "0.1.0"
-dependencies = [["classpp", "tenebrisnoctua/classpp@1.2.0"], ["cmdr", "evaera/cmdr@1.12.0"], ["janitor", "howmanysmall/janitor@1.17.0"], ["knit", "sleitnick/knit@1.7.0"], ["promise", "evaera/promise@4.0.0"], ["roact", "roblox/roact@1.4.4"]]
+dependencies = [["classpp", "tenebrisnoctua/classpp@1.2.0"], ["cmdr", "evaera/cmdr@1.12.0"], ["indium", "hoarsekat/indium@0.1.0"], ["janitor", "howmanysmall/janitor@1.17.0"], ["promise", "evaera/promise@4.0.0"], ["roact", "roblox/roact@1.4.4"]]
 
 [[package]]
 name = "roblox/roact"
@@ -31,11 +36,6 @@ dependencies = []
 name = "sleitnick/comm"
 version = "1.0.1"
 dependencies = [["Option", "sleitnick/option@1.0.5"], ["Promise", "evaera/promise@4.0.0"], ["Signal", "sleitnick/signal@2.0.1"]]
-
-[[package]]
-name = "sleitnick/knit"
-version = "1.7.0"
-dependencies = [["Comm", "sleitnick/comm@1.0.1"], ["Promise", "evaera/promise@4.0.0"]]
 
 [[package]]
 name = "sleitnick/option"

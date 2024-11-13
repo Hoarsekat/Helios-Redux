@@ -1,4 +1,4 @@
-local knit = require("@packages/knit")
+local indium = require("@packages/indium")
 local promise = require("@packages/promise")
 
 local runtime = os.clock()
@@ -16,7 +16,7 @@ promise
 	:catch(warn)
 
 promise
-	.try(knit.Start)
+	.try(indium.Start)
 	:andThen(function()
 		print(string.format("[Server] Took %.4f seconds to initialize services.", os.clock() - runtime))
 	end)

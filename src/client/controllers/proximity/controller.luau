@@ -2,14 +2,14 @@ local proximityPromptService = game:GetService("ProximityPromptService")
 local tweenService = game:GetService("TweenService")
 local players = game:GetService("Players")
 
-local knit = require("@packages/knit")
+local indium = require("@packages/indium")
 local janitor = require("@packages/janitor")
 
 local player = players.LocalPlayer
 
 local promptTemplate = script.Parent:WaitForChild("prompt")
 
-local controller = knit.CreateController({
+local controller = indium.CreateController({
 	Name = "PromptController",
 })
 
@@ -132,7 +132,7 @@ function promptShown(prompt: ProximityPrompt)
 	cleanup()
 end
 
-function controller:KnitInit()
+function controller:IndiumInit()
 	self.Janitor = janitor.new()
 	self.Janitor:Add(proximityPromptService.PromptShown:Connect(promptShown))
 end

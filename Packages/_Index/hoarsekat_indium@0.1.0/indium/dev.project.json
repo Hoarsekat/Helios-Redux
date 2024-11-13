@@ -1,0 +1,24 @@
+{
+	"emitLegacyScripts": false,
+	"name": "Indium-Dev",
+	"tree": {
+		"$className": "DataModel",
+		"ReplicatedStorage": {
+			"Packages": {
+				"$path": "Packages",
+				"Indium": {
+					"$path": "src"
+				}
+			},
+			"Tests": {
+                "$className": "Folder",
+				"Client": {
+					"$path": "tests/client"
+				},
+				"Server": {
+					"$path": "tests/server"
+				}
+			}
+		}
+	}
+}
