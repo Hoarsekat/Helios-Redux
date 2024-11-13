@@ -133,6 +133,7 @@ function controller:renderItem(slot, item, i)
 	slot.LayoutOrder = i
 	slot.Label.Text = item.Name
 	slot.Parent = inventoryFrame
+	slot.Visible = true
 end
 
 function controller:renderHotbar()
@@ -159,7 +160,7 @@ function controller:renderHotbar()
 
 	local backpackUsed = false
 
-	for i, item in pairs(backpack) do
+	for i, item in pairs(_backpack) do
 		backpackUsed = true
 		local _slot = uiSlot:Clone()
 		self:renderItem(_slot, item, i)
@@ -169,10 +170,10 @@ function controller:renderHotbar()
 		or Enum.HorizontalAlignment.Center
 end
 
-function controller:registerKey(_, inputState, inputObject)
+function controller.registerKey(_, inputState, inputObject)
 	local key = keycodes[inputObject.KeyCode]
 
-	if self.state.editMode then
+	if controller.state.editMode then
 		return
 	end
 
@@ -181,29 +182,31 @@ function controller:registerKey(_, inputState, inputObject)
 	end
 
 	if key and inputState == Enum.UserInputState.Begin then
-		if self.state.currentSlots[key] then
-			if self.state.equipped then
+		if controller.state.currentSlots[key] then
+			if controller.state.equipped then
 				character.Humanoid:UnequipTools()
 
-				if self.state.equippedSlot == key then
-					self.state.equipped = false
-					self.state.equippedSlot = false
+				if controller.state.equippedSlot == key then
+					controller.state.equipped = false
+					controller.state.equippedSlot = false
 
-					self:renderHotbar()
+					controller:renderHotbar()
 
 					return
 				end
 			end
 
-			character.Humanoid:EquipTool(self.state.currentSlots[key])
-			self.state.equipped = true
-			self.state.equippedSlot = key
-			self:renderHotbar()
+			character.Humanoid:EquipTool(controller.state.currentSlots[key])
+			controller.state.equipped = true
+			controller.state.equippedSlot = key
+			controller:renderHotbar()
 		end
 	end
 end
 
 function controller:IndiumInit()
+	inventoryService = indium.GetService("InventoryService")
+
 	self.state = {
 		editMode = false,
 		equippedSlot = false,
@@ -234,7 +237,7 @@ function controller:IndiumInit()
 
 		contextActionService:BindAction(
 			"InventoryKey",
-			self:registerKey(),
+			controller.registerKey,
 			false,
 			Enum.KeyCode.Zero,
 			Enum.KeyCode.One,
@@ -247,6 +250,8 @@ function controller:IndiumInit()
 			Enum.KeyCode.Eight,
 			Enum.KeyCode.Nine
 		)
+
+		self:renderHotbar()
 	end)
 end
 
